@@ -174,7 +174,6 @@ export class GUI implements IGUI {
 
     switch (key.code) {
       case "KeyW": {
-        if(this.camera.forward())
         this.camera.offset(this.camera.forward(), -GUI.zoomSpeed, true);
         break;
       }

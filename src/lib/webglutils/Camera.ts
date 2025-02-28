@@ -239,10 +239,10 @@ export class Camera {
     dir.scale(dt);
 
     const target: Vec3 = this.target();
-    this._eye.add(dir);
+    this._eye.add(new Vec3([dir.x, 0, dir.z]));
 
     if (offsetTarget === true) {
-      target.add(dir);
+      target.add(new Vec3([dir.x, 0, dir.z]));
     }
 
     this.setTarget(target);
