@@ -2,7 +2,7 @@ import { MaterialObject } from "./Objects.js";
 import { Mat3, Mat4, Vec3, Vec4 } from "../TSM.js";
 
 export class Floor implements MaterialObject {
-  private floorY: GLfloat = -2;
+  private floorY: GLfloat = 0;
   private vertices: Vec4[];
   private ind: Vec3[];
   private norms: Vec4[];

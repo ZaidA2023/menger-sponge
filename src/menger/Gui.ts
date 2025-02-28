@@ -48,8 +48,8 @@ export class GUI implements IGUI {
     animation: CanvasAnimation,
     sponge: MengerSponge
   ) {
-    this.height = canvas.height;
-    this.width = canvas.width;
+    this.height = window.innerHeight;
+    this.width = window.innerWidth;
     this.prevX = 0;
     this.prevY = 0;
 
@@ -126,19 +126,18 @@ export class GUI implements IGUI {
    * @param mouse
    */
   public drag(mouse: MouseEvent): void {
-    if(this.dragging && mouse.buttons === 1) {
       if(mouse.screenX < this.prevX) {
-        this.camera.yaw(GUI.rotationSpeed, false);
+        this.camera.yaw(GUI.rotationSpeed/2, false);
       } else if(mouse.screenX > this.prevX) {
-        this.camera.yaw(GUI.rotationSpeed, true);
+        this.camera.yaw(GUI.rotationSpeed/2, true);
       }
     
       if(mouse.screenY < this.prevY) {
-        this.camera.pitch(GUI.rotationSpeed, false);
+        this.camera.pitch(GUI.rotationSpeed/2, false);
       } else if(mouse.screenY > this.prevY) {
-        this.camera.pitch(GUI.rotationSpeed, true);
+        this.camera.pitch(GUI.rotationSpeed/2, true);
       }
-    } else if(this.dragging && mouse.buttons === 2) {
+    if(this.dragging && mouse.buttons === 2) {
       if(mouse.screenY < this.prevY) {
         this.camera.offsetDist(-GUI.zoomSpeed);
       } else if(mouse.screenY > this.prevY) {
@@ -175,6 +174,7 @@ export class GUI implements IGUI {
 
     switch (key.code) {
       case "KeyW": {
+        if(this.camera.forward())
         this.camera.offset(this.camera.forward(), -GUI.zoomSpeed, true);
         break;
       }

@@ -19,7 +19,7 @@ export let defaultVSText = `
         
         //  Compute light direction (world coordinates)
         lightDir = lightPosition - vec4(vertPosition, 1.0);
-		
+
         //  Pass along the vertex normal (world coordinates)
         normal = aNorm;
     }
@@ -50,28 +50,33 @@ export let floorVSText = `
     precision mediump float;
 
     attribute vec3 vertPosition;
+    uniform vec4 lightPosition;
+    varying vec4 lightDir;
 
     uniform mat4 mView;
-	uniform mat4 mProj;
+	  uniform mat4 mProj;
 
     varying vec3 worldPosition;
-
     void main() {
-        gl_Position = mProj * mView * vec4 (vertPosition, 1.0);
-        worldPosition = vertPosition;
+      lightDir = lightPosition - vec4(vertPosition, 1.0);
+      gl_Position = mProj * mView * vec4 (vertPosition, 1.0);
+      worldPosition = vertPosition;
     }
 `;
 export let floorFSText = `
     precision mediump float;
-
+    varying vec4 lightDir;
+    
     varying vec3 worldPosition;
-
     void main () {
-        if (mod(worldPosition.x, 10.0) < 5.0 ^^ mod(worldPosition.z, 10.0) < 5.0) {
-            gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
-        } else {
-            gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
-        }
+      gl_FragColor = vec4(0.03125, 0.410, 0.0508, 1.0);
+      float dotp = clamp(dot(lightDir.xyz, vec3(0.0,1.0,0.0)), 0.0, 1.0);
+
+      if(dotp < 0.0) {
+        gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
+      } else {
+        gl_FragColor = vec4(0.03125, 0.410, 0.0508, 1.0);
+      }
     }
 `;
 

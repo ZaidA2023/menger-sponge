@@ -90,12 +90,17 @@ export class MengerSponge implements IMengerSponge {
         let v3 = new Vec4([this.startingPos()[(vecOff)+8], this.startingPos()[(vecOff)+9], this.startingPos()[(vecOff)+10], this.startingPos()[(vecOff)+11]]);
         let v4 = new Vec4([this.startingPos()[(vecOff)+12], this.startingPos()[(vecOff)+13], this.startingPos()[(vecOff)+14], this.startingPos()[(vecOff)+15]]);
 
+        let scale = new Mat4().scale(new Vec3([4.0,4.0,4.0]));
         let t1 = transform.multiplyVec4(v1);
         let t2 = transform.multiplyVec4(v2);
         let t3 = transform.multiplyVec4(v3);
         let t4 = transform.multiplyVec4(v4);
-        
+
         let offset = this.positions.length / 4;
+        // this.positions.push(t1.x*8, t1.y*8, t1.z*8, t1.w);
+        // this.positions.push(t2.x*8, t2.y*8, t2.z*8, t2.w);
+        // this.positions.push(t3.x*8, t3.y*8, t3.z*8, t3.w);
+        // this.positions.push(t4.x*8, t4.y*8, t4.z*8, t4.w);
         this.positions.push(t1.x, t1.y, t1.z, t1.w);
         this.positions.push(t2.x, t2.y, t2.z, t2.w);
         this.positions.push(t3.x, t3.y, t3.z, t3.w);
@@ -161,8 +166,11 @@ export class MengerSponge implements IMengerSponge {
   public uMatrix(): Mat4 {
 
     // TODO: change this, if it's useful
-    const ret : Mat4 = new Mat4().setIdentity();
+    const scaleMatrix = new Mat4().scale(new Vec3([2.0, 2.0, 2.0])); // Replace with your Mat4 scaling method
 
+    //const modelMatrix = this.sponge.uMatrix().multiply(scaleMatrix);
+    const ret : Mat4 = new Mat4().setIdentity();
+    //ret = scaleMatrix.multiply(ret);
     return ret;    
   }
   

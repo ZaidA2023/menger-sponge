@@ -86,6 +86,8 @@ body {
     border: 1px solid var(--m-gry);
     grid-area: canvas;
     padding: 0;
+    width: 100vw;       /* 100% of viewport width */
+    height: 100vh;
 }
 
 #textCanvas {

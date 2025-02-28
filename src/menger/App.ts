@@ -11,7 +11,7 @@ import {
   floorFSText,
   floorVSText
 } from "./Shaders.js";
-import { Mat4, Vec4 } from "../lib/TSM.js";
+import { Mat4, Vec4, Vec3 } from "../lib/TSM.js";
 
 export interface MengerAnimationTest {
   reset(): void;
@@ -54,7 +54,7 @@ export class MengerAnimation extends CanvasAnimation {
   private floorProgram: WebGLProgram = -1;
   private floorPosBuffer: WebGLBuffer = -1;
   private floorPosAttribLoc: GLint = -1;
-  private readonly floorY: GLfloat = -2.0;
+  private readonly floorY: GLfloat = -0.5;
 
   private floorViewUniformLocation: WebGLUniformLocation = -1;
   private floorProjUniformLocation: WebGLUniformLocation = -1;
@@ -74,7 +74,7 @@ export class MengerAnimation extends CanvasAnimation {
 
     /* debugger; */
     this.lightPosition = new Vec4([-10.0, 10.0, -10.0, 1.0]);
-    this.backgroundColor = new Vec4([0.0, 0.37254903, 0.37254903, 1.0]);
+    this.backgroundColor = new Vec4([0.5078125, 0.78125, 0.89453125, 1.0]);
 
     this.initMenger();
     this.initFloor();
@@ -179,6 +179,7 @@ export class MengerAnimation extends CanvasAnimation {
       "lightPosition"
     ) as WebGLUniformLocation;
 
+    
     /* Bind uniforms */
     gl.uniformMatrix4fv(
       this.mengerWorldUniformLocation,
@@ -282,7 +283,7 @@ export class MengerAnimation extends CanvasAnimation {
   public draw(): void {
 
     const gl: WebGLRenderingContext = this.ctx;
-
+    gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
     /* Clear canvas */
     const bg: Vec4 = this.backgroundColor;
     gl.clearColor(bg.r, bg.g, bg.b, bg.a);
